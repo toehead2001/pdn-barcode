@@ -1,18 +1,64 @@
 /////////////////////////////////////////////////////////////////////////////////
-// Paint.NET Effect Plugin Name: Barcode                                       //
-// Author: Michael J. Sepcot                                                   //
-// Version: 1.1.1                                                              //
-// Release Date: 19 March 2007                                                 //
+// Paint.NET Effect Plugin Name: Barcode                                       
+// Author: Michael J. Sepcot
+//
+// Version: 1.2.0 by toe_head2001
+// Release Date: 23 February 2015
+//
 /////////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.Collections;
 using System.Drawing;
+using System.Reflection;
 using PaintDotNet;
 using PaintDotNet.Effects;
 
 namespace Barcode
 {
+    public class PluginSupportInfo : IPluginSupportInfo
+    {
+        public string Author
+        {
+            get
+            {
+                return ((AssemblyCopyrightAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false)[0]).Copyright;
+            }
+        }
+        public string Copyright
+        {
+            get
+            {
+                return ((AssemblyDescriptionAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0]).Description;
+            }
+        }
+
+        public string DisplayName
+        {
+            get
+            {
+                return ((AssemblyProductAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product;
+            }
+        }
+
+        public Version Version
+        {
+            get
+            {
+                return base.GetType().Assembly.GetName().Version;
+            }
+        }
+
+        public Uri WebsiteUri
+        {
+            get
+            {
+                return new Uri("http://www.getpaint.net/redirect/plugins.html");
+            }
+        }
+    }
+
+    [PluginSupportInfo(typeof(PluginSupportInfo), DisplayName = "Barcode")]
+
     public class Barcode
         : PaintDotNet.Effects.Effect
     {
@@ -38,8 +84,16 @@ namespace Barcode
             }
         }
 
+        public static string SubmenuName
+        {
+            get
+            {
+                return SubmenuNames.Render;
+            }
+        }
+
         public Barcode()
-            : base(Barcode.StaticName, Barcode.StaticIcon, true)
+            : base(StaticName, StaticIcon, SubmenuName, EffectFlags.Configurable)
         {
         }
 

@@ -1,8 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////////
-// Paint.NET Effect Plugin Name: Barcode                                       //
-// Author: Michael J. Sepcot                                                   //
-// Version: 1.1.1                                                              //
-// Release Date: 19 March 2007                                                 //
+// Paint.NET Effect Plugin Name: Barcode
+// Author: Michael J. Sepcot
+//
+// Version: 1.2.0 by toe_head2001
+// Release Date: 23 February 2015
+//
 /////////////////////////////////////////////////////////////////////////////////
 
 using System;
@@ -129,10 +131,11 @@ namespace Barcode
 			{
 				for (int lcv = 0; lcv < text.Length; lcv++)
 				{
-					if ((int)text[lcv] < 0 && (int)text[lcv] > 127)
-					{
-						passedInspection = false;
-					}
+                    if ((int)text[lcv] < 0 || (int)text[lcv] > 127)
+                    {
+                        passedInspection = false;
+                        break;
+                    }
 				}
 			}
 
