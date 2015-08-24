@@ -74,8 +74,8 @@ namespace Barcode
 			this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonCancel.Location = new System.Drawing.Point(254, 141);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new System.Drawing.Size(83, 25);
-			this.buttonCancel.TabIndex = 1;
+			this.buttonCancel.Size = new System.Drawing.Size(83, 23);
+			this.buttonCancel.TabIndex = 5;
 			this.buttonCancel.Text = "Cancel";
 			this.buttonCancel.UseVisualStyleBackColor = true;
 			this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -85,8 +85,8 @@ namespace Barcode
 			this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonOK.Location = new System.Drawing.Point(162, 141);
 			this.buttonOK.Name = "buttonOK";
-			this.buttonOK.Size = new System.Drawing.Size(83, 25);
-			this.buttonOK.TabIndex = 2;
+			this.buttonOK.Size = new System.Drawing.Size(83, 23);
+			this.buttonOK.TabIndex = 4;
 			this.buttonOK.Text = "OK";
 			this.buttonOK.UseVisualStyleBackColor = true;
 			this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -113,7 +113,7 @@ namespace Barcode
 			this.comboEncoding.Location = new System.Drawing.Point(7, 76);
 			this.comboEncoding.Name = "comboEncoding";
 			this.comboEncoding.Size = new System.Drawing.Size(127, 23);
-			this.comboEncoding.TabIndex = 0;
+			this.comboEncoding.TabIndex = 1;
 			this.comboEncoding.SelectedIndexChanged += new System.EventHandler(this.comboEncoding_SelectedIndexChanged);
 			// 
 			// checkBoxBW
@@ -122,7 +122,7 @@ namespace Barcode
 			this.checkBoxBW.Location = new System.Drawing.Point(7, 109);
 			this.checkBoxBW.Name = "checkBoxBW";
 			this.checkBoxBW.Size = new System.Drawing.Size(111, 19);
-			this.checkBoxBW.TabIndex = 7;
+			this.checkBoxBW.TabIndex = 3;
 			this.checkBoxBW.Text = "Black and White";
 			this.checkBoxBW.UseVisualStyleBackColor = true;
 			this.checkBoxBW.CheckedChanged += new System.EventHandler(this.checkBoxBW_CheckedStateChanged);
@@ -133,7 +133,7 @@ namespace Barcode
 			this.labelDivider.Location = new System.Drawing.Point(7, 133);
 			this.labelDivider.Name = "labelDivider";
 			this.labelDivider.Size = new System.Drawing.Size(332, 2);
-			this.labelDivider.TabIndex = 6;
+			this.labelDivider.TabIndex = 0;
 			// 
 			// labelText
 			// 
@@ -150,7 +150,7 @@ namespace Barcode
 			this.labelTextLine.Location = new System.Drawing.Point(7, 14);
 			this.labelTextLine.Name = "labelTextLine";
 			this.labelTextLine.Size = new System.Drawing.Size(332, 2);
-			this.labelTextLine.TabIndex = 9;
+			this.labelTextLine.TabIndex = 0;
 			// 
 			// labelMethod
 			// 
@@ -167,7 +167,7 @@ namespace Barcode
 			this.labelMethodLine.Location = new System.Drawing.Point(7, 63);
 			this.labelMethodLine.Name = "labelMethodLine";
 			this.labelMethodLine.Size = new System.Drawing.Size(332, 2);
-			this.labelMethodLine.TabIndex = 10;
+			this.labelMethodLine.TabIndex = 0;
 			// 
 			// BarcodeConfigDialog
 			// 
@@ -188,6 +188,9 @@ namespace Barcode
 			this.Location = new System.Drawing.Point(0, 0);
 			this.Name = "BarcodeConfigDialog";
 			this.Text = "Barcode";
+			this.ActiveControl = textBoxText;
+			this.CancelButton = buttonCancel;
+			this.AcceptButton = buttonOK;
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -207,7 +210,10 @@ namespace Barcode
 
 		private void checkBoxBW_CheckedStateChanged(object sender, EventArgs e)
 		{
-			FinishTokenUpdate();
+			if (Barcode.ValidateText(this.textBoxText.Text, this.comboEncoding.SelectedIndex))
+			{
+				FinishTokenUpdate();
+			}
 		}
 
         private void textBoxText_TextChanged(object sender, EventArgs e)
