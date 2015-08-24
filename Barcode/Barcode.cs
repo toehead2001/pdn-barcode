@@ -67,6 +67,7 @@ namespace Barcode
         public const int CODE_39_MOD_43 = 1;
         public const int FULL_ASCII_CODE_39 = 2;
 		public const int POSTNET = 3;
+		public const int UPCA = 4;
 
         public static string StaticName
         {
@@ -102,6 +103,8 @@ namespace Barcode
             return new BarcodeConfigDialog();
         }
 
+		private Surface _upca = null;
+
         public override void Render(EffectConfigToken parameters, RenderArgs dstArgs, RenderArgs srcArgs, Rectangle[] rois, int startIndex, int length)
         {
             // Set the text to encode and the encoding type
@@ -133,6 +136,13 @@ namespace Barcode
 				Postnet postnet = new Postnet();
 				barcode = postnet.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
 			}
+			else if (encoding == Barcode.UPCA)
+			{
+				UPCa upca = new UPCa();
+				Bitmap upcaBitmap;
+				upcaBitmap = upca.CreateBarCode(selection, toEncode, primary, secondary);
+				_upca = Surface.CopyFromBitmap(upcaBitmap);
+			}
 
             for (int i = startIndex; i < startIndex + length; ++i)
             {
@@ -141,7 +151,7 @@ namespace Barcode
                 {
                     for (int x = rect.Left; x < rect.Right; ++x)
                     {
-                        dstArgs.Surface[x, y] = barcode[x,y];
+                        dstArgs.Surface[x, y] = (encoding != Barcode.UPCA)?barcode[x, y]:_upca.GetBilinearSample((x - selection.Left), (y - selection.Top));
                     }
                 }
             }
@@ -165,8 +175,12 @@ namespace Barcode
 			{
 				return Postnet.Validate(text);
 			}
-            else
-            {
+			else if (encoding == Barcode.UPCA)
+			{
+				return UPCa.Validate(text);
+			}
+			else
+			{
                 return false;
             }
         }

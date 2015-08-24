@@ -122,7 +122,8 @@ namespace Barcode
             "Code 39",
             "Code 39 mod 43",
             "Full ASCII Code 39",
-            "POSTNET"});
+            "POSTNET",
+			"UPC-A"});
             this.comboEncoding.Location = new System.Drawing.Point(7, 20);
             this.comboEncoding.Name = "comboEncoding";
             this.comboEncoding.Size = new System.Drawing.Size(231, 21);

@@ -89,6 +89,7 @@
     <Compile Include="Code39.cs" />
     <Compile Include="Postnet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UPCa.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BarcodeConfigDialog.resx">
@@ -126,4 +127,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "C:\Program Files\Paint.NET\Effects\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
