@@ -1,9 +1,6 @@
-/////////////////////////////////////////////////////////////////////////////////
-// Paint.NET Effect Plugin Name: Barcode                                       //
-// Author: Michael J. Sepcot                                                   //
-// Version: 1.1.1                                                              //
-// Release Date: 19 March 2007                                                 //
-/////////////////////////////////////////////////////////////////////////////////
+// Paint.NET Effect Plugin Name: Barcode
+// Author: Michael J. Sepcot
+// Addional Modifications: toe_head201
 
 using System;
 using System.Drawing;
@@ -22,7 +19,7 @@ namespace Barcode
         {
             get
             {
-                return this.width;
+                return width;
             }
         }
 
@@ -30,7 +27,7 @@ namespace Barcode
         {
             get
             {
-                return this.height;
+                return height;
             }
         }
 		
@@ -38,7 +35,7 @@ namespace Barcode
 		{
 			get
 			{
-                if (this.rect.Contains(x, y))
+                if (rect.Contains(x, y))
                 {
                     return surface[this.ConvertX(x), this.ConvertY(y)];
                 }
@@ -59,19 +56,19 @@ namespace Barcode
 		public BarcodeSurface(Rectangle rect)
 		{
 			this.rect = rect;
-			this.width = rect.Width;
-			this.height = rect.Height;
-			this.surface = new ColorBgra[rect.Width, rect.Height];
+			width = rect.Width;
+			height = rect.Height;
+			surface = new ColorBgra[rect.Width, rect.Height];
 		}
 		
 		private int ConvertX (int x)
 		{
-			return (x - this.rect.Left);
+			return (x - rect.Left);
 		}
 		
 		private int ConvertY (int y)
 		{
-			return (y - this.rect.Top);
+			return (y - rect.Top);
 		}
 	}
 }

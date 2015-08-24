@@ -1,14 +1,8 @@
-/////////////////////////////////////////////////////////////////////////////////
 // Paint.NET Effect Plugin Name: Barcode
 // Author: Michael J. Sepcot
-//
-// Version: 1.2.0 by toe_head2001
-// Release Date: 23 February 2015
-//
-/////////////////////////////////////////////////////////////////////////////////
+// Addional Modifications: toe_head201
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -16,39 +10,39 @@ using PaintDotNet;
 
 namespace Barcode
 {
-    public class Code39
+	public class Code39
 	{
 		private Dictionary<char, string> code39 = new Dictionary<char, string>(128);
 		
 		public Code39()
 		{
-            this.BuildCode39FullAscii();
+			BuildCode39FullAscii();
 		}
 		
-		public BarcodeSurface CreateCode39(Rectangle rect, Surface source, String text, ColorBgra primaryColor, ColorBgra secondaryColor)
+		public BarcodeSurface CreateCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
 		{
 			text = text.ToUpperInvariant();
-			return this.Create(rect, source, text, primaryColor, secondaryColor);
+			return Create(rect, source, text, primaryColor, secondaryColor);
 		}
 		
-		public BarcodeSurface CreateCode39mod43(Rectangle rect, Surface source, String text, ColorBgra primaryColor, ColorBgra secondaryColor)
+		public BarcodeSurface CreateCode39mod43(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
 		{
 			text = text.ToUpperInvariant();
-			text = text + Code39.Mod43(text);
-			return this.Create(rect, source, text, primaryColor, secondaryColor);
+			text = text + Mod43(text);
+			return Create(rect, source, text, primaryColor, secondaryColor);
 		}
 		
-		public BarcodeSurface CreateFullAsciiCode39(Rectangle rect, Surface source, String text, ColorBgra primaryColor, ColorBgra secondaryColor)
+		public BarcodeSurface CreateFullAsciiCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
 		{
-			return this.Create(rect, source, text, primaryColor, secondaryColor);
+			return Create(rect, source, text, primaryColor, secondaryColor);
 		}
 		
-		private BarcodeSurface Create(Rectangle rect, Surface source, String text, ColorBgra primaryColor, ColorBgra secondaryColor)
+		private BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
 		{
 			BarcodeSurface barcode = new BarcodeSurface(rect);
-			String encodedText = this.Encode(text);
+			string encodedText = Encode(text);
 			
-			int barWidth = (int)System.Math.Floor((double)barcode.Width / encodedText.Length);
+			int barWidth = (int)Math.Floor((double)barcode.Width / encodedText.Length);
 			
 			for (int y = rect.Top; y < rect.Bottom; y++)
 			{
@@ -83,8 +77,8 @@ namespace Barcode
 			return barcode;
 		}
 		
-        private const String charSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
-        public static char Mod43(String text)
+        private const string charSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
+        public static char Mod43(string text)
         {
             int total = 0;
             for (int lcv = 0; lcv < text.Length; lcv++)
@@ -94,9 +88,9 @@ namespace Barcode
             return charSet[total % 43 + 1];
         }
 		
-		public String Encode(String text)
+		public string Encode(string text)
 		{
-			String encoded = "";
+			string encoded = "";
             if (text.Length > 0)
             {
                 encoded = "bwwwbwbbbwbbbwb" + "w";
@@ -109,17 +103,17 @@ namespace Barcode
 			return encoded;
 		}
 		
-		public static bool ValidateCode39(String text)
+		public static bool ValidateCode39(string text)
 		{
 			return Regex.Match(text.ToUpperInvariant(), "^[A-Z0-9-\\.\\$/\\+%\\s]+$").Success;
 		}
 		
-		public static bool ValidateCode39mod43(String text)
+		public static bool ValidateCode39mod43(string text)
 		{
-			return Code39.ValidateCode39(text);
+			return ValidateCode39(text);
 		}
 		
-		public static bool ValidateFullAsciiCode39(String text)
+		public static bool ValidateFullAsciiCode39(string text)
 		{
 			bool passedInspection = true;
 			

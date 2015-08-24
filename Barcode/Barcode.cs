@@ -1,11 +1,6 @@
-/////////////////////////////////////////////////////////////////////////////////
-// Paint.NET Effect Plugin Name: Barcode                                       
+// Paint.NET Effect Plugin Name: Barcode
 // Author: Michael J. Sepcot
-//
-// Version: 1.2.0 by toe_head2001
-// Release Date: 23 February 2015
-//
-/////////////////////////////////////////////////////////////////////////////////
+// Addional Modifications: toe_head201
 
 using System;
 using System.Drawing;
@@ -59,16 +54,8 @@ namespace Barcode
 
     [PluginSupportInfo(typeof(PluginSupportInfo), DisplayName = "Barcode")]
 
-    public class Barcode
-        : PaintDotNet.Effects.Effect
-    {
-        // Note: The value of these constants match the index of the drop down box items in BarcodeConfigDialog
-        public const int CODE_39 = 0;
-        public const int CODE_39_MOD_43 = 1;
-        public const int FULL_ASCII_CODE_39 = 2;
-		public const int POSTNET = 3;
-		public const int UPCA = 4;
-
+    public class Barcode : Effect
+	{
         public static string StaticName
         {
             get
@@ -103,16 +90,22 @@ namespace Barcode
             return new BarcodeConfigDialog();
         }
 
-		private Surface _upca = null;
+		// Note: The value of these constants match the index of the drop down box items in BarcodeConfigDialog
+		public const int CODE_39 = 0;
+		public const int CODE_39_MOD_43 = 1;
+		public const int FULL_ASCII_CODE_39 = 2;
+		public const int POSTNET = 3;
+		public const int UPCA = 4;
 
         public override void Render(EffectConfigToken parameters, RenderArgs dstArgs, RenderArgs srcArgs, Rectangle[] rois, int startIndex, int length)
         {
             // Set the text to encode and the encoding type
-            String toEncode = ((BarcodeConfigToken)parameters).TextToEncode;
+			string toEncode = ((BarcodeConfigToken)parameters).TextToEncode;
             int encoding = ((BarcodeConfigToken)parameters).EncodingType;
-			
+
+			Surface _upca = null;
 			BarcodeSurface barcode = null;
-			Rectangle selection = this.EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
+			Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
 			ColorBgra primary;
 			ColorBgra secondary;
 			if (((BarcodeConfigToken)parameters).ColorsBW)
@@ -122,32 +115,32 @@ namespace Barcode
 			}
 			else
 			{
-				primary = this.EnvironmentParameters.PrimaryColor;
-				secondary = this.EnvironmentParameters.SecondaryColor;
+				primary = EnvironmentParameters.PrimaryColor;
+				secondary = EnvironmentParameters.SecondaryColor;
 			}
 
 
-			if (encoding == Barcode.CODE_39)
+			if (encoding == CODE_39)
 			{
 				Code39 code39 = new Code39();
 				barcode = code39.CreateCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
 			}
-			else if (encoding == Barcode.CODE_39_MOD_43)
+			else if (encoding == CODE_39_MOD_43)
 			{
 				Code39 code39 = new Code39();
 				barcode = code39.CreateCode39mod43(selection, srcArgs.Surface, toEncode, primary, secondary);
 			}
-			else if (encoding == Barcode.FULL_ASCII_CODE_39)
+			else if (encoding == FULL_ASCII_CODE_39)
 			{
 				Code39 code39 = new Code39();
 				barcode = code39.CreateFullAsciiCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
 			}
-			else if (encoding == Barcode.POSTNET)
+			else if (encoding == POSTNET)
 			{
 				Postnet postnet = new Postnet();
 				barcode = postnet.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
 			}
-			else if (encoding == Barcode.UPCA)
+			else if (encoding == UPCA)
 			{
 				UPCa upca = new UPCa();
 				Bitmap upcaBitmap;
@@ -162,31 +155,31 @@ namespace Barcode
                 {
                     for (int x = rect.Left; x < rect.Right; ++x)
                     {
-                        dstArgs.Surface[x, y] = (encoding != Barcode.UPCA)?barcode[x, y]:_upca.GetBilinearSample((x - selection.Left), (y - selection.Top));
+                        dstArgs.Surface[x, y] = (encoding != UPCA) ?barcode[x, y]:_upca.GetBilinearSample((x - selection.Left), (y - selection.Top));
                     }
                 }
             }
         }
 
-        public static bool ValidateText(String text, int encoding)
+        public static bool ValidateText(string text, int encoding)
         {
-            if (encoding == Barcode.CODE_39)
+            if (encoding == CODE_39)
             {
                 return Code39.ValidateCode39(text);
             }
-			else if (encoding == Barcode.CODE_39_MOD_43)
+			else if (encoding == CODE_39_MOD_43)
 			{
 				return Code39.ValidateCode39mod43(text);
 			}
-            else if (encoding == Barcode.FULL_ASCII_CODE_39)
+            else if (encoding == FULL_ASCII_CODE_39)
             {
 				return Code39.ValidateFullAsciiCode39(text);
             }
-			else if (encoding == Barcode.POSTNET)
+			else if (encoding == POSTNET)
 			{
 				return Postnet.Validate(text);
 			}
-			else if (encoding == Barcode.UPCA)
+			else if (encoding == UPCA)
 			{
 				return UPCa.Validate(text);
 			}

@@ -1,4 +1,8 @@
-﻿using PaintDotNet;
+﻿// Barcode UPC-A
+// Author: Bill Daugherty II
+// Addional Modifications: toe_head201
+
+using PaintDotNet;
 using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -19,7 +23,7 @@ namespace Barcode
 		private string[] UPCARight = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
 		private string UPCAEnd = "1010000000000000";
 
-		public Bitmap CreateBarCode(Rectangle rect, String txt, ColorBgra primaryColor, ColorBgra secondaryColor)
+		public Bitmap CreateBarCode(Rectangle rect, string txt, ColorBgra primaryColor, ColorBgra secondaryColor)
 		{
 			if (!Validate(txt))
 			{
@@ -35,7 +39,7 @@ namespace Barcode
 			}
 			barCodeHeight = (int)(rect.Height / imageScale);
 			imageWidth = 120;
-			imageWidth = System.Convert.ToInt32(imageWidth * imageScale);
+			imageWidth = Convert.ToInt32(imageWidth * imageScale);
 			newBitmap = new Bitmap((imageWidth), rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 			g = Graphics.FromImage(newBitmap);
 			g.ScaleTransform(imageScale, imageScale);
@@ -44,9 +48,9 @@ namespace Barcode
 			placeMarker = 0;
 			txt = txt.Substring(0, 11) + GetCheckSum(txt).ToString();
 			int wholeSet = 0;
-			for (wholeSet = 1; wholeSet <= System.Convert.ToInt32(txt.Length); wholeSet++)
+			for (wholeSet = 1; wholeSet <= Convert.ToInt32(txt.Length); wholeSet++)
 			{
-				int currentASCII = (int)Convert.ToChar((txt.Substring(wholeSet - 1, 1))) - 48;
+				int currentASCII = Convert.ToChar((txt.Substring(wholeSet - 1, 1))) - 48;
 				if (wholeSet == 1)
 				{
 					DrawSet(UPCABegin, placeMarker, barCodeHeight, 0, primaryColor, secondaryColor);
@@ -72,16 +76,16 @@ namespace Barcode
 				}
 			}
 
-			System.Drawing.Font font = new System.Drawing.Font("Courier New, Bold", 9);
+			Font font = new Font("Courier New, Bold", 9);
 			try
 			{
 				SolidBrush textBrush = new SolidBrush(primaryColor);
 				float yPoint = barCodeHeight - 13;
 				g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-				g.DrawString(txt.Substring(0, 1), font, textBrush, new System.Drawing.PointF(0, yPoint));
-				g.DrawString(txt.Substring(1, 5), font, textBrush, new System.Drawing.PointF(22, yPoint));
-				g.DrawString(txt.Substring(6, 5), font, textBrush, new System.Drawing.PointF(60, yPoint));
-				g.DrawString(txt.Substring(11, 1), font, textBrush, new System.Drawing.PointF(108, yPoint));
+				g.DrawString(txt.Substring(0, 1), font, textBrush, new PointF(0, yPoint));
+				g.DrawString(txt.Substring(1, 5), font, textBrush, new PointF(22, yPoint));
+				g.DrawString(txt.Substring(6, 5), font, textBrush, new PointF(60, yPoint));
+				g.DrawString(txt.Substring(11, 1), font, textBrush, new PointF(108, yPoint));
 			}
 			finally
 			{
@@ -90,7 +94,7 @@ namespace Barcode
 			return newBitmap;
 		}
 
-		public static bool Validate(String text)
+		public static bool Validate(string text)
 		{
 			return Regex.Match(text, "^[0-9]{12}$").Success;
 		}

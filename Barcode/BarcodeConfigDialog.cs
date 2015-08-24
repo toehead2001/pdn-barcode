@@ -1,24 +1,15 @@
-/////////////////////////////////////////////////////////////////////////////////
 // Paint.NET Effect Plugin Name: Barcode
 // Author: Michael J. Sepcot
-//
-// Version: 1.2.0 by toe_head2001
-// Release Date: 23 February 2015
-//
-/////////////////////////////////////////////////////////////////////////////////
+// Addional Modifications: toe_head201
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using PaintDotNet.Effects;
 
 namespace Barcode
 {
-    public class BarcodeConfigDialog : PaintDotNet.Effects.EffectConfigDialog
-    {
+	public class BarcodeConfigDialog : EffectConfigDialog
+	{
         private Button buttonOK;
         private TextBox textBoxText;
         private ComboBox comboEncoding;
@@ -218,30 +209,30 @@ namespace Barcode
 
         private void textBoxText_TextChanged(object sender, EventArgs e)
         {
-            if (Barcode.ValidateText(this.textBoxText.Text, this.comboEncoding.SelectedIndex))
+            if (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex))
             {
-                this.textBoxText.BackColor = System.Drawing.SystemColors.Window;
+                textBoxText.BackColor = System.Drawing.SystemColors.Window;
                 buttonOK.Enabled = true;
                 FinishTokenUpdate();
             }
             else
             {
-                this.textBoxText.BackColor = System.Drawing.Color.LightPink;
+                textBoxText.BackColor = System.Drawing.Color.LightPink;
                 buttonOK.Enabled = false;
             }
         }
 
         private void comboEncoding_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Barcode.ValidateText(this.textBoxText.Text, this.comboEncoding.SelectedIndex))
+            if (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex))
             {
-                this.textBoxText.BackColor = System.Drawing.SystemColors.Window;
+				textBoxText.BackColor = System.Drawing.SystemColors.Window;
                 buttonOK.Enabled = true;
                 FinishTokenUpdate();
             }
             else
             {
-                this.textBoxText.BackColor = System.Drawing.Color.LightPink;
+                textBoxText.BackColor = System.Drawing.Color.LightPink;
                 buttonOK.Enabled = false;
             }
         }

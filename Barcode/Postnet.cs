@@ -1,12 +1,8 @@
-/////////////////////////////////////////////////////////////////////////////////
-// Paint.NET Effect Plugin Name: Barcode                                       //
-// Author: Michael J. Sepcot                                                   //
-// Version: 1.1.1                                                              //
-// Release Date: 19 March 2007                                                 //
-/////////////////////////////////////////////////////////////////////////////////
+// Paint.NET Effect Plugin Name: Barcode
+// Author: Michael J. Sepcot
+// Addional Modifications: toe_head201
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -14,22 +10,22 @@ using PaintDotNet;
 
 namespace Barcode
 {
-    public class Postnet
+	public class Postnet
 	{
 		private Dictionary<char, string> postnet = new Dictionary<char, string>(10);
 		
 		public Postnet()
 		{
-			this.BuildPostnet();
+			BuildPostnet();
 		}
 		
-		public BarcodeSurface Create(Rectangle rect, Surface source, String text, ColorBgra primaryColor, ColorBgra secondaryColor)
+		public BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
 		{
 			BarcodeSurface barcode = new BarcodeSurface(rect);
-			String encodedText = this.Encode(text);
+			string encodedText = Encode(text);
 			
-			int barWidth = (int)System.Math.Floor((double)barcode.Width / encodedText.Length);
-			int halfBarHeight = (int)System.Math.Floor((double)barcode.Height / 2.0);
+			int barWidth = (int)Math.Floor((double)barcode.Width / encodedText.Length);
+			int halfBarHeight = (int)Math.Floor((double)barcode.Height / 2.0);
 			
 			int currentHeight = 0;
 			for (int y = rect.Top; y < rect.Bottom; y++)
@@ -66,17 +62,17 @@ namespace Barcode
 			return barcode;
 		}
 		
-        public static bool Validate(String text)
+        public static bool Validate(string text)
         {
 			return Regex.Match(text, "(^(\\d){5}$)|(^(\\d){6}$)|(^(\\d){9}$)|(^(\\d){11}$)").Success;
         }
 		
-		public String Encode(String text)
+		public string Encode(string text)
 		{
-			String encoded = "";
-			if ( Postnet.Validate(text) )
+			string encoded = "";
+			if (Validate(text) )
 			{
-				text =  text + Postnet.CheckDigit(text);
+				text =  text + CheckDigit(text);
 				encoded += "Bw";
 				for (int lcv = 0; lcv < text.Length; lcv++)
 				{
@@ -87,7 +83,7 @@ namespace Barcode
 			return encoded;
 		}
 		
-		public static String CheckDigit(String text)
+		public static string CheckDigit(string text)
 		{
 			int total = 0;
 			for ( int lcv = 0; lcv < text.Length; lcv++ )

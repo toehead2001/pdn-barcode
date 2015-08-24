@@ -1,35 +1,31 @@
-/////////////////////////////////////////////////////////////////////////////////
-// Paint.NET Effect Plugin Name: Barcode                                       //
-// Author: Michael J. Sepcot                                                   //
-// Version: 1.1.1                                                              //
-// Release Date: 19 March 2007                                                 //
-/////////////////////////////////////////////////////////////////////////////////
+// Paint.NET Effect Plugin Name: Barcode
+// Author: Michael J. Sepcot
+// Addional Modifications: toe_head201
 
-using System;
 
 namespace Barcode
 {
-    public class BarcodeConfigToken : PaintDotNet.Effects.EffectConfigToken
+	public class BarcodeConfigToken : PaintDotNet.Effects.EffectConfigToken
     {
-        private String textToEncode;
-        public String TextToEncode
+        private string textToEncode;
+        public string TextToEncode
         {
             get { return textToEncode; }
-            set { this.textToEncode = value; }
+            set { textToEncode = value; }
         }
         
         private int encodingType;
         public int EncodingType
         {
             get { return encodingType; }
-            set { this.encodingType = value; }
+            set { encodingType = value; }
         }
 
 		private bool colorsBW;
 		public bool ColorsBW
 		{
 			get { return colorsBW; }
-			set { this.colorsBW = value; }
+			set { colorsBW = value; }
 		}
 
         public BarcodeConfigToken()
@@ -40,20 +36,20 @@ namespace Barcode
 			colorsBW = false;
         }
 
-        public BarcodeConfigToken(String text, int encoding, bool colors)
+        public BarcodeConfigToken(string text, int encoding, bool colors)
             : base()
         {
-            this.textToEncode = text;
-            this.encodingType = encoding;
-			this.colorsBW = colors;
+			textToEncode = text;
+			encodingType = encoding;
+			colorsBW = colors;
         }
 
         protected BarcodeConfigToken(BarcodeConfigToken copyMe)
             : base(copyMe)
         {
-            this.textToEncode = copyMe.textToEncode;
-            this.encodingType = copyMe.encodingType;
-			this.colorsBW = copyMe.colorsBW;
+			textToEncode = copyMe.textToEncode;
+			encodingType = copyMe.encodingType;
+			colorsBW = copyMe.colorsBW;
         }
 
         public override object Clone()
