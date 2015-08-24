@@ -25,18 +25,27 @@ namespace Barcode
             set { this.encodingType = value; }
         }
 
+		private bool colorsBW;
+		public bool ColorsBW
+		{
+			get { return colorsBW; }
+			set { this.colorsBW = value; }
+		}
+
         public BarcodeConfigToken()
             : base()
         {
             textToEncode = "";
             encodingType = Barcode.CODE_39;
+			colorsBW = false;
         }
 
-        public BarcodeConfigToken(String text, int encoding)
+        public BarcodeConfigToken(String text, int encoding, bool colors)
             : base()
         {
             this.textToEncode = text;
             this.encodingType = encoding;
+			this.colorsBW = colors;
         }
 
         protected BarcodeConfigToken(BarcodeConfigToken copyMe)
@@ -44,6 +53,7 @@ namespace Barcode
         {
             this.textToEncode = copyMe.textToEncode;
             this.encodingType = copyMe.encodingType;
+			this.colorsBW = copyMe.colorsBW;
         }
 
         public override object Clone()

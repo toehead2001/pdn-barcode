@@ -26,6 +26,7 @@ namespace Barcode
         private ComboBox comboEncoding;
         private Label labelVersion;
         private Button buttonCancel;
+		private CheckBox checkBoxBW;
 
         public BarcodeConfigDialog()
         {
@@ -34,13 +35,14 @@ namespace Barcode
 
         protected override void InitialInitToken()
         {
-            theEffectToken = new BarcodeConfigToken("", Barcode.CODE_39);
+            theEffectToken = new BarcodeConfigToken("", Barcode.CODE_39, false);
         }
 
         protected override void InitTokenFromDialog()
         {
             ((BarcodeConfigToken)EffectToken).TextToEncode = textBoxText.Text;
             ((BarcodeConfigToken)EffectToken).EncodingType = comboEncoding.SelectedIndex;
+			((BarcodeConfigToken)EffectToken).ColorsBW = checkBoxBW.Checked;
         }
 
         protected override void InitDialogFromToken(EffectConfigToken effectToken)
@@ -48,6 +50,7 @@ namespace Barcode
             BarcodeConfigToken token = (BarcodeConfigToken)effectToken;
             textBoxText.Text = token.TextToEncode;
             comboEncoding.SelectedIndex = token.EncodingType;
+			checkBoxBW.Checked = token.ColorsBW;
         }
 
         private void InitializeComponent()
@@ -59,6 +62,7 @@ namespace Barcode
             this.groupBoxEncoding = new System.Windows.Forms.GroupBox();
             this.comboEncoding = new System.Windows.Forms.ComboBox();
             this.labelVersion = new System.Windows.Forms.Label();
+			this.checkBoxBW = new System.Windows.Forms.CheckBox();
             this.groupBoxText.SuspendLayout();
             this.groupBoxEncoding.SuspendLayout();
             this.SuspendLayout();
@@ -66,7 +70,7 @@ namespace Barcode
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(182, 133);
+            this.buttonCancel.Location = new System.Drawing.Point(182, 155);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
@@ -77,7 +81,7 @@ namespace Barcode
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(101, 133);
+            this.buttonOK.Location = new System.Drawing.Point(101, 155);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 2;
@@ -134,21 +138,33 @@ namespace Barcode
             // 
             this.labelVersion.AutoSize = true;
             this.labelVersion.ForeColor = System.Drawing.Color.Gray;
-            this.labelVersion.Location = new System.Drawing.Point(13, 143);
+            this.labelVersion.Location = new System.Drawing.Point(13, 160);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(37, 13);
             this.labelVersion.TabIndex = 6;
             this.labelVersion.Text = "v1.2.0";
+			// 
+			// checkBoxBW
+			// 
+			this.checkBoxBW.AutoSize = true;
+			this.checkBoxBW.Location = new System.Drawing.Point(16, 130);
+			this.checkBoxBW.Name = "checkBoxBW";
+			this.checkBoxBW.Size = new System.Drawing.Size(80, 17);
+			this.checkBoxBW.TabIndex = 7;
+			this.checkBoxBW.Text = "Black and White";
+			this.checkBoxBW.UseVisualStyleBackColor = true;
+			this.checkBoxBW.CheckedChanged += new System.EventHandler(this.checkBoxBW_CheckedStateChanged);
             // 
             // BarcodeConfigDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.ClientSize = new System.Drawing.Size(269, 168);
+            this.ClientSize = new System.Drawing.Size(269, 185);
             this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.groupBoxEncoding);
             this.Controls.Add(this.groupBoxText);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
+			this.Controls.Add(this.checkBoxBW);
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "BarcodeConfigDialog";
             this.Text = "Barcode";
@@ -157,6 +173,7 @@ namespace Barcode
             this.Controls.SetChildIndex(this.groupBoxText, 0);
             this.Controls.SetChildIndex(this.groupBoxEncoding, 0);
             this.Controls.SetChildIndex(this.labelVersion, 0);
+            this.Controls.SetChildIndex(this.checkBoxBW, 0);
             this.groupBoxText.ResumeLayout(false);
             this.groupBoxText.PerformLayout();
             this.groupBoxEncoding.ResumeLayout(false);
@@ -178,6 +195,11 @@ namespace Barcode
         {
             this.Close();
         }
+
+		private void checkBoxBW_CheckedStateChanged(object sender, EventArgs e)
+		{
+			FinishTokenUpdate();
+		}
 
         private void textBoxText_TextChanged(object sender, EventArgs e)
         {

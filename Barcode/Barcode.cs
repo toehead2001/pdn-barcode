@@ -113,8 +113,19 @@ namespace Barcode
 			
 			BarcodeSurface barcode = null;
 			Rectangle selection = this.EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
-			ColorBgra primary = this.EnvironmentParameters.PrimaryColor;
-			ColorBgra secondary = this.EnvironmentParameters.SecondaryColor;
+			ColorBgra primary;
+			ColorBgra secondary;
+			if (((BarcodeConfigToken)parameters).ColorsBW)
+			{
+				primary = Color.Black;
+				secondary = Color.White;
+			}
+			else
+			{
+				primary = this.EnvironmentParameters.PrimaryColor;
+				secondary = this.EnvironmentParameters.SecondaryColor;
+			}
+
 
 			if (encoding == Barcode.CODE_39)
 			{
