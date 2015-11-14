@@ -135,9 +135,7 @@ namespace Barcode
             else if (encoding == UPCA)
             {
                 UPCa upca = new UPCa();
-                Bitmap upcaBitmap = upca.CreateBarCode(selection, toEncode, primary, secondary);
-                _upca = Surface.CopyFromBitmap(upcaBitmap);
-                upcaBitmap.Dispose();
+                barcode = upca.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
             }
         }
 
@@ -161,25 +159,16 @@ namespace Barcode
         int encoding;
         bool colorsBW;
 
-        private Surface _upca;
         private BarcodeSurface barcode;
-        ColorBgra finalPixel;
 
         void Render(Surface dst, Surface src, Rectangle rect)
         {
-            Rectangle selection = EnvironmentParameters.GetSelection(src.Bounds).GetBoundsInt();
-
             for (int y = rect.Top; y < rect.Bottom; ++y)
             {
                 if (IsCancelRequested) return;
                 for (int x = rect.Left; x < rect.Right; ++x)
                 {
-                    if (encoding != UPCA)
-                        finalPixel = barcode[x, y];
-                    else
-                        finalPixel = _upca.GetBilinearSample((x - selection.Left), (y - selection.Top));
-
-                    dst[x, y] = finalPixel;
+                    dst[x, y] = barcode[x, y];
                 }
             }
         }
