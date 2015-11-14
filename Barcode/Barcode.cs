@@ -112,7 +112,6 @@ namespace Barcode
                 secondary = EnvironmentParameters.SecondaryColor;
             }
 
-
             if (encoding == CODE_39)
             {
                 Code39 code39 = new Code39();
@@ -136,11 +135,10 @@ namespace Barcode
             else if (encoding == UPCA)
             {
                 UPCa upca = new UPCa();
-                Bitmap upcaBitmap;
-                upcaBitmap = upca.CreateBarCode(selection, toEncode, primary, secondary);
+                Bitmap upcaBitmap = upca.CreateBarCode(selection, toEncode, primary, secondary);
                 _upca = Surface.CopyFromBitmap(upcaBitmap);
+                upcaBitmap.Dispose();
             }
-
         }
 
         protected override unsafe void OnRender(Rectangle[] rois, int startIndex, int length)
@@ -151,7 +149,6 @@ namespace Barcode
                 Render(DstArgs.Surface, SrcArgs.Surface, rois[i]);
             }
         }
-
 
         // Note: The value of these constants match the index of the drop down box items in BarcodeConfigDialog
         public const int CODE_39 = 0;
@@ -166,6 +163,7 @@ namespace Barcode
 
         private Surface _upca;
         private BarcodeSurface barcode;
+        ColorBgra finalPixel;
 
         void Render(Surface dst, Surface src, Rectangle rect)
         {
@@ -173,9 +171,15 @@ namespace Barcode
 
             for (int y = rect.Top; y < rect.Bottom; ++y)
             {
+                if (IsCancelRequested) return;
                 for (int x = rect.Left; x < rect.Right; ++x)
                 {
-                    dst[x, y] = (encoding != UPCA) ?barcode[x, y]:_upca.GetBilinearSample((x - selection.Left), (y - selection.Top));
+                    if (encoding != UPCA)
+                        finalPixel = barcode[x, y];
+                    else
+                        finalPixel = _upca.GetBilinearSample((x - selection.Left), (y - selection.Top));
+
+                    dst[x, y] = finalPixel;
                 }
             }
         }
