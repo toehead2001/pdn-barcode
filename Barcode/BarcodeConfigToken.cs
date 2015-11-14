@@ -5,7 +5,7 @@
 
 namespace Barcode
 {
-	public class BarcodeConfigToken : PaintDotNet.Effects.EffectConfigToken
+    public class BarcodeConfigToken : PaintDotNet.Effects.EffectConfigToken
     {
         private string textToEncode;
         public string TextToEncode
@@ -21,35 +21,35 @@ namespace Barcode
             set { encodingType = value; }
         }
 
-		private bool colorsBW;
-		public bool ColorsBW
-		{
-			get { return colorsBW; }
-			set { colorsBW = value; }
-		}
+        private bool colorsBW;
+        public bool ColorsBW
+        {
+            get { return colorsBW; }
+            set { colorsBW = value; }
+        }
 
         public BarcodeConfigToken()
             : base()
         {
             textToEncode = "";
             encodingType = Barcode.CODE_39;
-			colorsBW = false;
+            colorsBW = false;
         }
 
         public BarcodeConfigToken(string text, int encoding, bool colors)
             : base()
         {
-			textToEncode = text;
-			encodingType = encoding;
-			colorsBW = colors;
+            textToEncode = text;
+            encodingType = encoding;
+            colorsBW = colors;
         }
 
         protected BarcodeConfigToken(BarcodeConfigToken copyMe)
             : base(copyMe)
         {
-			textToEncode = copyMe.textToEncode;
-			encodingType = copyMe.encodingType;
-			colorsBW = copyMe.colorsBW;
+            textToEncode = copyMe.textToEncode;
+            encodingType = copyMe.encodingType;
+            colorsBW = copyMe.colorsBW;
         }
 
         public override object Clone()
