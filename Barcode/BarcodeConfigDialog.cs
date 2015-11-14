@@ -15,15 +15,16 @@ namespace Barcode
         private ComboBox comboEncoding;
         private Button buttonCancel;
         private CheckBox checkBoxBW;
-        private Label labelDivider;
         private Label labelText;
-        private Label labelTextLine;
         private Label labelMethod;
-        private Label labelMethodLine;
+        private Panel panelTextLine;
+        private Panel panelMethodLine;
+        private Panel panelDivider;
 
         public BarcodeConfigDialog()
         {
             InitializeComponent();
+            ActiveControl = textBoxText;
         }
 
         protected override void InitialInitToken()
@@ -53,16 +54,17 @@ namespace Barcode
             this.textBoxText = new System.Windows.Forms.TextBox();
             this.comboEncoding = new System.Windows.Forms.ComboBox();
             this.checkBoxBW = new System.Windows.Forms.CheckBox();
-            this.labelDivider = new System.Windows.Forms.Label();
             this.labelText = new System.Windows.Forms.Label();
-            this.labelTextLine = new System.Windows.Forms.Label();
             this.labelMethod = new System.Windows.Forms.Label();
-            this.labelMethodLine = new System.Windows.Forms.Label();
+            this.panelDivider = new System.Windows.Forms.Panel();
+            this.panelTextLine = new System.Windows.Forms.Panel();
+            this.panelMethodLine = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(254, 141);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(83, 23);
@@ -118,14 +120,6 @@ namespace Barcode
             this.checkBoxBW.UseVisualStyleBackColor = true;
             this.checkBoxBW.CheckedChanged += new System.EventHandler(this.checkBoxBW_CheckedStateChanged);
             // 
-            // labelDivider
-            // 
-            this.labelDivider.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelDivider.Location = new System.Drawing.Point(7, 133);
-            this.labelDivider.Name = "labelDivider";
-            this.labelDivider.Size = new System.Drawing.Size(332, 2);
-            this.labelDivider.TabIndex = 0;
-            // 
             // labelText
             // 
             this.labelText.AutoSize = true;
@@ -134,14 +128,6 @@ namespace Barcode
             this.labelText.Size = new System.Drawing.Size(88, 15);
             this.labelText.TabIndex = 0;
             this.labelText.Text = "Text To Encode";
-            // 
-            // labelTextLine
-            // 
-            this.labelTextLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelTextLine.Location = new System.Drawing.Point(7, 14);
-            this.labelTextLine.Name = "labelTextLine";
-            this.labelTextLine.Size = new System.Drawing.Size(332, 2);
-            this.labelTextLine.TabIndex = 0;
             // 
             // labelMethod
             // 
@@ -152,36 +138,51 @@ namespace Barcode
             this.labelMethod.TabIndex = 0;
             this.labelMethod.Text = "Encoding Method";
             // 
-            // labelMethodLine
+            // panelDivider
             // 
-            this.labelMethodLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelMethodLine.Location = new System.Drawing.Point(7, 63);
-            this.labelMethodLine.Name = "labelMethodLine";
-            this.labelMethodLine.Size = new System.Drawing.Size(332, 2);
-            this.labelMethodLine.TabIndex = 0;
+            this.panelDivider.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelDivider.Location = new System.Drawing.Point(7, 133);
+            this.panelDivider.Name = "panelDivider";
+            this.panelDivider.Size = new System.Drawing.Size(332, 1);
+            this.panelDivider.TabIndex = 6;
+            // 
+            // panelTextLine
+            // 
+            this.panelTextLine.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelTextLine.Location = new System.Drawing.Point(7, 14);
+            this.panelTextLine.Name = "panelTextLine";
+            this.panelTextLine.Size = new System.Drawing.Size(332, 1);
+            this.panelTextLine.TabIndex = 7;
+            // 
+            // panelMethodLine
+            // 
+            this.panelMethodLine.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panelMethodLine.Location = new System.Drawing.Point(7, 63);
+            this.panelMethodLine.Name = "panelMethodLine";
+            this.panelMethodLine.Size = new System.Drawing.Size(332, 1);
+            this.panelMethodLine.TabIndex = 8;
             // 
             // BarcodeConfigDialog
             // 
+            this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.BackColor = System.Drawing.SystemColors.Window;
+            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(345, 174);
+            this.Controls.Add(this.panelDivider);
             this.Controls.Add(this.checkBoxBW);
-            this.Controls.Add(this.labelDivider);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.comboEncoding);
             this.Controls.Add(this.textBoxText);
             this.Controls.Add(this.labelText);
-            this.Controls.Add(this.labelTextLine);
             this.Controls.Add(this.labelMethod);
-            this.Controls.Add(this.labelMethodLine);
+            this.Controls.Add(this.panelTextLine);
+            this.Controls.Add(this.panelMethodLine);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "BarcodeConfigDialog";
             this.Text = "Barcode";
-            this.ActiveControl = textBoxText;
-            this.CancelButton = buttonCancel;
-            this.AcceptButton = buttonOK;
             this.ResumeLayout(false);
             this.PerformLayout();
 
