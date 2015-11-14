@@ -54,7 +54,7 @@ namespace Barcode
 
     [PluginSupportInfo(typeof(PluginSupportInfo), DisplayName = "Barcode")]
 
-    public class Barcode : Effect
+    public class Barcode : Effect<BarcodeConfigToken>
     {
         public static string StaticName
         {
@@ -90,25 +90,18 @@ namespace Barcode
             return new BarcodeConfigDialog();
         }
 
-        // Note: The value of these constants match the index of the drop down box items in BarcodeConfigDialog
-        public const int CODE_39 = 0;
-        public const int CODE_39_MOD_43 = 1;
-        public const int FULL_ASCII_CODE_39 = 2;
-        public const int POSTNET = 3;
-        public const int UPCA = 4;
-
-        public override void Render(EffectConfigToken parameters, RenderArgs dstArgs, RenderArgs srcArgs, Rectangle[] rois, int startIndex, int length)
+        protected override void OnSetRenderInfo(BarcodeConfigToken newToken, RenderArgs dstArgs, RenderArgs srcArgs)
         {
-            // Set the text to encode and the encoding type
-            string toEncode = ((BarcodeConfigToken)parameters).TextToEncode;
-            int encoding = ((BarcodeConfigToken)parameters).EncodingType;
+            toEncode = newToken.TextToEncode;
+            encoding = newToken.EncodingType;
+            colorsBW = newToken.ColorsBW;
 
-            Surface _upca = null;
-            BarcodeSurface barcode = null;
             Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
+
             ColorBgra primary;
             ColorBgra secondary;
-            if (((BarcodeConfigToken)parameters).ColorsBW)
+
+            if (colorsBW)
             {
                 primary = Color.Black;
                 secondary = Color.White;
@@ -148,15 +141,41 @@ namespace Barcode
                 _upca = Surface.CopyFromBitmap(upcaBitmap);
             }
 
+        }
+
+        protected override unsafe void OnRender(Rectangle[] rois, int startIndex, int length)
+        {
+            if (length == 0) return;
             for (int i = startIndex; i < startIndex + length; ++i)
             {
-                Rectangle rect = rois[i];
-                for (int y = rect.Top; y < rect.Bottom; ++y)
+                Render(DstArgs.Surface, SrcArgs.Surface, rois[i]);
+            }
+        }
+
+
+        // Note: The value of these constants match the index of the drop down box items in BarcodeConfigDialog
+        public const int CODE_39 = 0;
+        public const int CODE_39_MOD_43 = 1;
+        public const int FULL_ASCII_CODE_39 = 2;
+        public const int POSTNET = 3;
+        public const int UPCA = 4;
+
+        string toEncode;
+        int encoding;
+        bool colorsBW;
+
+        private Surface _upca;
+        private BarcodeSurface barcode;
+
+        void Render(Surface dst, Surface src, Rectangle rect)
+        {
+            Rectangle selection = EnvironmentParameters.GetSelection(src.Bounds).GetBoundsInt();
+
+            for (int y = rect.Top; y < rect.Bottom; ++y)
+            {
+                for (int x = rect.Left; x < rect.Right; ++x)
                 {
-                    for (int x = rect.Left; x < rect.Right; ++x)
-                    {
-                        dstArgs.Surface[x, y] = (encoding != UPCA) ?barcode[x, y]:_upca.GetBilinearSample((x - selection.Left), (y - selection.Top));
-                    }
+                    dst[x, y] = (encoding != UPCA) ?barcode[x, y]:_upca.GetBilinearSample((x - selection.Left), (y - selection.Top));
                 }
             }
         }
