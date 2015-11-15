@@ -202,10 +202,7 @@ namespace Barcode
 
         private void checkBoxBW_CheckedStateChanged(object sender, EventArgs e)
         {
-            if (Barcode.ValidateText(this.textBoxText.Text, this.comboEncoding.SelectedIndex))
-            {
-                FinishTokenUpdate();
-            }
+            FinishTokenUpdate();
         }
 
         private void textBoxText_TextChanged(object sender, EventArgs e)
@@ -213,14 +210,12 @@ namespace Barcode
             if (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex))
             {
                 textBoxText.BackColor = System.Drawing.SystemColors.Window;
-                buttonOK.Enabled = true;
-                FinishTokenUpdate();
             }
             else
             {
                 textBoxText.BackColor = System.Drawing.Color.LightPink;
-                buttonOK.Enabled = false;
             }
+            FinishTokenUpdate();
         }
 
         private void comboEncoding_SelectedIndexChanged(object sender, EventArgs e)
@@ -228,14 +223,12 @@ namespace Barcode
             if (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex))
             {
                 textBoxText.BackColor = System.Drawing.SystemColors.Window;
-                buttonOK.Enabled = true;
-                FinishTokenUpdate();
             }
             else
             {
                 textBoxText.BackColor = System.Drawing.Color.LightPink;
-                buttonOK.Enabled = false;
             }
+            FinishTokenUpdate();
         }
     }
 }

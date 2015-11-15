@@ -21,12 +21,22 @@ namespace Barcode
         
         public BarcodeSurface CreateCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
+            if (!ValidateCode39(text))
+            {
+                BarcodeSurface barcode = new BarcodeSurface(rect);
+                return barcode;
+            }
             text = text.ToUpperInvariant();
             return Create(rect, source, text, primaryColor, secondaryColor);
         }
         
         public BarcodeSurface CreateCode39mod43(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
+            if (!ValidateCode39mod43(text))
+            {
+                BarcodeSurface barcode = new BarcodeSurface(rect);
+                return barcode;
+            }
             text = text.ToUpperInvariant();
             text = text + Mod43(text);
             return Create(rect, source, text, primaryColor, secondaryColor);
@@ -34,6 +44,11 @@ namespace Barcode
         
         public BarcodeSurface CreateFullAsciiCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
+            if (!ValidateFullAsciiCode39(text))
+            {
+                BarcodeSurface barcode = new BarcodeSurface(rect);
+                return barcode;
+            }
             return Create(rect, source, text, primaryColor, secondaryColor);
         }
         

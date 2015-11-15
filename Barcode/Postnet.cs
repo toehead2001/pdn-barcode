@@ -22,6 +22,12 @@ namespace Barcode
         public BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             BarcodeSurface barcode = new BarcodeSurface(rect);
+
+            if (!Validate(text))
+            {
+                return barcode;
+            }
+
             string encodedText = Encode(text);
             
             int barWidth = (int)Math.Floor((double)barcode.Width / encodedText.Length);
