@@ -13,7 +13,7 @@ namespace Barcode
             get { return textToEncode; }
             set { textToEncode = value; }
         }
-        
+
         private int encodingType;
         public int EncodingType
         {

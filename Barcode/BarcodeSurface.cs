@@ -14,7 +14,7 @@ namespace Barcode
         private int height;
         private Rectangle rect;
         private ColorBgra[,] surface;
-        
+
         public int Width
         {
             get
@@ -30,7 +30,7 @@ namespace Barcode
                 return height;
             }
         }
-        
+
         public ColorBgra this[int x, int y]
         {
             get
@@ -46,13 +46,13 @@ namespace Barcode
             }
             set
             {
-                if (this.rect.Contains(x,y))
+                if (this.rect.Contains(x, y))
                 {
-                    surface[ this.ConvertX(x), this.ConvertY(y) ] = value;
+                    surface[this.ConvertX(x), this.ConvertY(y)] = value;
                 }
             }
         }
-        
+
         public BarcodeSurface(Rectangle rect)
         {
             this.rect = rect;
@@ -60,13 +60,13 @@ namespace Barcode
             height = rect.Height;
             surface = new ColorBgra[rect.Width, rect.Height];
         }
-        
-        private int ConvertX (int x)
+
+        private int ConvertX(int x)
         {
             return (x - rect.Left);
         }
-        
-        private int ConvertY (int y)
+
+        private int ConvertY(int y)
         {
             return (y - rect.Top);
         }

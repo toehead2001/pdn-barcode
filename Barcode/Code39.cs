@@ -13,12 +13,12 @@ namespace Barcode
     public class Code39
     {
         private Dictionary<char, string> code39 = new Dictionary<char, string>(128);
-        
+
         public Code39()
         {
             BuildCode39FullAscii();
         }
-        
+
         public BarcodeSurface CreateCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             if (!ValidateCode39(text))
@@ -29,7 +29,7 @@ namespace Barcode
             text = text.ToUpperInvariant();
             return Create(rect, source, text, primaryColor, secondaryColor);
         }
-        
+
         public BarcodeSurface CreateCode39mod43(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             if (!ValidateCode39mod43(text))
@@ -41,7 +41,7 @@ namespace Barcode
             text = text + Mod43(text);
             return Create(rect, source, text, primaryColor, secondaryColor);
         }
-        
+
         public BarcodeSurface CreateFullAsciiCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             if (!ValidateFullAsciiCode39(text))
@@ -51,14 +51,14 @@ namespace Barcode
             }
             return Create(rect, source, text, primaryColor, secondaryColor);
         }
-        
+
         private BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             BarcodeSurface barcode = new BarcodeSurface(rect);
             string encodedText = Encode(text);
-            
+
             int barWidth = (int)Math.Floor((double)barcode.Width / encodedText.Length);
-            
+
             for (int y = rect.Top; y < rect.Bottom; y++)
             {
                 int loc = 0;
@@ -88,10 +88,10 @@ namespace Barcode
                     }
                 }
             }
-            
+
             return barcode;
         }
-        
+
         private const string charSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
         public static char Mod43(string text)
         {
@@ -102,7 +102,7 @@ namespace Barcode
             }
             return charSet[total % 43 + 1];
         }
-        
+
         public string Encode(string text)
         {
             string encoded = "";
@@ -114,24 +114,24 @@ namespace Barcode
                     encoded += code39[text[lcv]] + "w";
                 }
                 encoded += "bwwwbwbbbwbbbwb";
-            }			
+            }
             return encoded;
         }
-        
+
         public static bool ValidateCode39(string text)
         {
             return Regex.Match(text.ToUpperInvariant(), "^[A-Z0-9-\\.\\$/\\+%\\s]+$").Success;
         }
-        
+
         public static bool ValidateCode39mod43(string text)
         {
             return ValidateCode39(text);
         }
-        
+
         public static bool ValidateFullAsciiCode39(string text)
         {
             bool passedInspection = true;
-            
+
             if (text.Length == 0)
             {
                 passedInspection = false;
@@ -150,7 +150,7 @@ namespace Barcode
 
             return passedInspection;
         }
-        
+
         private void BuildCode39FullAscii()
         {
             code39.Add((char)0, "bwbwwwbwwwbwwwbwbbbwwwbwbwbwbbb"); // NUL
