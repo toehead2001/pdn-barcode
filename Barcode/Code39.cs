@@ -98,9 +98,9 @@ namespace Barcode
             int total = 0;
             for (int lcv = 0; lcv < text.Length; lcv++)
             {
-                total = total + charSet.IndexOf(text.Substring(lcv, 1)) - 1;
+                total = total + charSet.IndexOf(text.Substring(lcv, 1));
             }
-            return charSet[total % 43 + 1];
+            return charSet[total % 43];
         }
 
         public string Encode(string text)
