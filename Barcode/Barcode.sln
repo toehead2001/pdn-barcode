@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcode", "Barcode.csproj", "{E6CC35F5-D649-41C2-8FAF-83DB1426C49D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcode", "Barcode.csproj", "{681FD899-A137-4137-B7B2-504D88687803}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E6CC35F5-D649-41C2-8FAF-83DB1426C49D}.Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{E6CC35F5-D649-41C2-8FAF-83DB1426C49D}.Debug|Any CPU.Build.0 = Release|Any CPU
-		{E6CC35F5-D649-41C2-8FAF-83DB1426C49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6CC35F5-D649-41C2-8FAF-83DB1426C49D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{681FD899-A137-4137-B7B2-504D88687803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{681FD899-A137-4137-B7B2-504D88687803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{681FD899-A137-4137-B7B2-504D88687803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{681FD899-A137-4137-B7B2-504D88687803}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
