@@ -130,8 +130,7 @@ namespace Barcode
             }
             else if (encoding == UPCA)
             {
-                UPCa upca = new UPCa();
-                barcode = upca.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
+                barcode = UPCa.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
             }
         }
 

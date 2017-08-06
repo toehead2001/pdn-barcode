@@ -9,21 +9,21 @@ using System.Text.RegularExpressions;
 
 namespace Barcode
 {
-    class UPCa
+    static class UPCa
     {
-        private Bitmap newBitmap;
-        private Graphics g;
-        private int barCodeHeight;
-        private int placeMarker = 0;
-        private int imageWidth = 0;
-        private float imageScale = 1;
-        private string UPCABegin = "0000000000000101";
-        private string[] UPCALeft = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
-        private string UPCAMiddle = "01010";
-        private string[] UPCARight = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
-        private string UPCAEnd = "1010000000000000";
+        private static Bitmap newBitmap;
+        private static Graphics g;
+        private static int barCodeHeight;
+        private static int placeMarker = 0;
+        private static int imageWidth = 0;
+        private static float imageScale = 1;
+        private const string UPCABegin = "0000000000000101";
+        private static readonly string[] UPCALeft = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
+        private const string UPCAMiddle = "01010";
+        private static readonly string[] UPCARight = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
+        private const string UPCAEnd = "1010000000000000";
 
-        public BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
+        public static BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             BarcodeSurface barcode = new BarcodeSurface(rect);
 
@@ -112,7 +112,7 @@ namespace Barcode
             return Regex.Match(text, "^[0-9]{12}$").Success;
         }
 
-        public int GetCheckSum(string barCode)
+        public static int GetCheckSum(string barCode)
         {
             string leftSideOfBarCode = barCode.Substring(0, 11);
             int total = 0;
@@ -134,7 +134,7 @@ namespace Barcode
             return iCheckSum;
         }
 
-        private void DrawSet(string upcCode, int drawLocation, int barCodeHeight, int barHeight, ColorBgra primaryColor, ColorBgra secondaryColor)
+        private static void DrawSet(string upcCode, int drawLocation, int barCodeHeight, int barHeight, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             int[] currentLetterArray = new int[upcCode.Length];
             placeMarker += upcCode.Length;
