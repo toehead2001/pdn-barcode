@@ -18,7 +18,7 @@ namespace Barcode
 
         protected override void InitialInitToken()
         {
-            theEffectToken = new BarcodeConfigToken("", Barcode.CODE_39, false);
+            theEffectToken = new BarcodeConfigToken();
         }
 
         protected override void InitTokenFromDialog()
