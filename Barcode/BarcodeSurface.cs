@@ -8,30 +8,15 @@ using PaintDotNet;
 
 namespace Barcode
 {
-    public class BarcodeSurface
+    internal class BarcodeSurface
     {
-        private int width;
-        private int height;
         private Rectangle rect;
         private ColorBgra[,] surface;
 
-        public int Width
-        {
-            get
-            {
-                return width;
-            }
-        }
+        internal int Width => rect.Width;
+        internal int Height => rect.Height;
 
-        public int Height
-        {
-            get
-            {
-                return height;
-            }
-        }
-
-        public ColorBgra this[int x, int y]
+        internal ColorBgra this[int x, int y]
         {
             get
             {
@@ -53,11 +38,9 @@ namespace Barcode
             }
         }
 
-        public BarcodeSurface(Rectangle rect)
+        internal BarcodeSurface(Rectangle rect)
         {
             this.rect = rect;
-            width = rect.Width;
-            height = rect.Height;
             surface = new ColorBgra[rect.Width, rect.Height];
         }
 
