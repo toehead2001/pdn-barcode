@@ -114,18 +114,15 @@ namespace Barcode
 
             if (encoding == CODE_39)
             {
-                Code39 code39 = new Code39();
-                barcode = code39.CreateCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
+                barcode = Code39.CreateCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
             }
             else if (encoding == CODE_39_MOD_43)
             {
-                Code39 code39 = new Code39();
-                barcode = code39.CreateCode39mod43(selection, srcArgs.Surface, toEncode, primary, secondary);
+                barcode = Code39.CreateCode39mod43(selection, srcArgs.Surface, toEncode, primary, secondary);
             }
             else if (encoding == FULL_ASCII_CODE_39)
             {
-                Code39 code39 = new Code39();
-                barcode = code39.CreateFullAsciiCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
+                barcode = Code39.CreateFullAsciiCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
             }
             else if (encoding == POSTNET)
             {
