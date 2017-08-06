@@ -2,8 +2,9 @@
 // Author: Michael J. Sepcot
 // Addional Modifications: toe_head201
 
-using System;
 using PaintDotNet.Effects;
+using System;
+using System.Drawing;
 
 namespace Barcode
 {
@@ -27,9 +28,9 @@ namespace Barcode
             ((BarcodeConfigToken)EffectToken).ColorsBW = checkBoxBW.Checked;
         }
 
-        protected override void InitDialogFromToken(EffectConfigToken effectToken)
+        protected override void InitDialogFromToken(EffectConfigToken effectTokenCopy)
         {
-            BarcodeConfigToken token = (BarcodeConfigToken)effectToken;
+            BarcodeConfigToken token = (BarcodeConfigToken)effectTokenCopy;
             textBoxText.Text = token.TextToEncode;
             comboEncoding.SelectedIndex = token.EncodingType;
             checkBoxBW.Checked = token.ColorsBW;
@@ -42,27 +43,13 @@ namespace Barcode
 
         private void textBoxText_TextChanged(object sender, EventArgs e)
         {
-            if (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex))
-            {
-                textBoxText.BackColor = System.Drawing.SystemColors.Window;
-            }
-            else
-            {
-                textBoxText.BackColor = System.Drawing.Color.LightPink;
-            }
+            textBoxText.BackColor = (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex)) ? SystemColors.Window : Color.LightPink;
             FinishTokenUpdate();
         }
 
         private void comboEncoding_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex))
-            {
-                textBoxText.BackColor = System.Drawing.SystemColors.Window;
-            }
-            else
-            {
-                textBoxText.BackColor = System.Drawing.Color.LightPink;
-            }
+            textBoxText.BackColor = (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex)) ? SystemColors.Window : Color.LightPink;
             FinishTokenUpdate();
         }
     }
