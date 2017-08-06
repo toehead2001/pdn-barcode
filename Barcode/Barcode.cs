@@ -126,8 +126,7 @@ namespace Barcode
             }
             else if (encoding == POSTNET)
             {
-                Postnet postnet = new Postnet();
-                barcode = postnet.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
+                barcode = Postnet.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
             }
             else if (encoding == UPCA)
             {

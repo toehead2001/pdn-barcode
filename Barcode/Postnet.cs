@@ -10,16 +10,28 @@ using PaintDotNet;
 
 namespace Barcode
 {
-    public class Postnet
+    public static class Postnet
     {
-        private Dictionary<char, string> postnet = new Dictionary<char, string>(10);
+        private static readonly Dictionary<char, string> postnet;
 
-        public Postnet()
+        static Postnet()
         {
-            BuildPostnet();
+            postnet = new Dictionary<char, string>(10)
+            {
+                { '0', "BwBwbwbwbw" },
+                { '1', "bwbwbwBwBw" },
+                { '2', "bwbwBwbwBw" },
+                { '3', "bwbwBwBwbw" },
+                { '4', "bwBwbwbwBw" },
+                { '5', "bwBwbwBwbw" },
+                { '6', "bwBwBwbwbw" },
+                { '7', "BwbwbwbwBw" },
+                { '8', "BwbwbwBwbw" },
+                { '9', "BwbwBwbwbw" }
+            };
         }
 
-        public BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
+        public static BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             BarcodeSurface barcode = new BarcodeSurface(rect);
 
@@ -73,7 +85,7 @@ namespace Barcode
             return Regex.Match(text, "(^(\\d){5}$)|(^(\\d){6}$)|(^(\\d){9}$)|(^(\\d){11}$)").Success;
         }
 
-        public string Encode(string text)
+        public static string Encode(string text)
         {
             string encoded = "";
             if (Validate(text))
@@ -99,20 +111,5 @@ namespace Barcode
             int checkDigit = (10 - (total % 10));
             return Convert.ToString(checkDigit);
         }
-
-        private void BuildPostnet()
-        {
-            postnet.Add('0', "BwBwbwbwbw");
-            postnet.Add('1', "bwbwbwBwBw");
-            postnet.Add('2', "bwbwBwbwBw");
-            postnet.Add('3', "bwbwBwBwbw");
-            postnet.Add('4', "bwBwbwbwBw");
-            postnet.Add('5', "bwBwbwBwbw");
-            postnet.Add('6', "bwBwBwbwbw");
-            postnet.Add('7', "BwbwbwbwBw");
-            postnet.Add('8', "BwbwbwBwbw");
-            postnet.Add('9', "BwbwBwbwbw");
-        }
-
     }
 }
