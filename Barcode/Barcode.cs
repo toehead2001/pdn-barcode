@@ -12,76 +12,22 @@ namespace Barcode
 {
     public class PluginSupportInfo : IPluginSupportInfo
     {
-        public string Author
-        {
-            get
-            {
-                return ((AssemblyCopyrightAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false)[0]).Copyright;
-            }
-        }
-        public string Copyright
-        {
-            get
-            {
-                return ((AssemblyDescriptionAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0]).Description;
-            }
-        }
-
-        public string DisplayName
-        {
-            get
-            {
-                return ((AssemblyProductAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product;
-            }
-        }
-
-        public Version Version
-        {
-            get
-            {
-                return base.GetType().Assembly.GetName().Version;
-            }
-        }
-
-        public Uri WebsiteUri
-        {
-            get
-            {
-                return new Uri("http://www.getpaint.net/redirect/plugins.html");
-            }
-        }
+        public string Author => ((AssemblyCopyrightAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false)[0]).Copyright;
+        public string Copyright => ((AssemblyDescriptionAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0]).Description;
+        public string DisplayName => ((AssemblyProductAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product;
+        public Version Version => base.GetType().Assembly.GetName().Version;
+        public Uri WebsiteUri => new Uri("http://www.getpaint.net/redirect/plugins.html");
     }
 
     [PluginSupportInfo(typeof(PluginSupportInfo), DisplayName = "Barcode")]
 
     public class Barcode : Effect<BarcodeConfigToken>
     {
-        public static string StaticName
-        {
-            get
-            {
-                return "Barcode";
-            }
-        }
-
-        public static Bitmap StaticIcon
-        {
-            get
-            {
-                return new Bitmap(typeof(Barcode), "BarcodeIcon.png");
-            }
-        }
-
-        public static string SubmenuName
-        {
-            get
-            {
-                return SubmenuNames.Render;
-            }
-        }
+        private const string StaticName = "Barcode";
+        private static readonly Bitmap StaticIcon = new Bitmap(typeof(Barcode), "BarcodeIcon.png");
 
         public Barcode()
-            : base(StaticName, StaticIcon, SubmenuName, EffectFlags.Configurable)
+            : base(StaticName, StaticIcon, SubmenuNames.Render, EffectFlags.Configurable)
         {
         }
 
@@ -92,9 +38,9 @@ namespace Barcode
 
         protected override void OnSetRenderInfo(BarcodeConfigToken newToken, RenderArgs dstArgs, RenderArgs srcArgs)
         {
-            toEncode = newToken.TextToEncode;
-            encoding = newToken.EncodingType;
-            colorsBW = newToken.ColorsBW;
+            string toEncode = newToken.TextToEncode;
+            int encoding = newToken.EncodingType;
+            bool colorsBW = newToken.ColorsBW;
 
             Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
 
@@ -112,47 +58,41 @@ namespace Barcode
                 secondary = EnvironmentParameters.SecondaryColor;
             }
 
-            if (encoding == CODE_39)
+            switch (encoding)
             {
-                barcode = Code39.CreateCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
-            }
-            else if (encoding == CODE_39_MOD_43)
-            {
-                barcode = Code39.CreateCode39mod43(selection, srcArgs.Surface, toEncode, primary, secondary);
-            }
-            else if (encoding == FULL_ASCII_CODE_39)
-            {
-                barcode = Code39.CreateFullAsciiCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
-            }
-            else if (encoding == POSTNET)
-            {
-                barcode = Postnet.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
-            }
-            else if (encoding == UPCA)
-            {
-                barcode = UPCa.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
+                case CODE_39:
+                    barcode = Code39.CreateCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
+                    break;
+                case CODE_39_MOD_43:
+                    barcode = Code39.CreateCode39mod43(selection, srcArgs.Surface, toEncode, primary, secondary);
+                    break;
+                case FULL_ASCII_CODE_39:
+                    barcode = Code39.CreateFullAsciiCode39(selection, srcArgs.Surface, toEncode, primary, secondary);
+                    break;
+                case POSTNET:
+                    barcode = Postnet.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
+                    break;
+                case UPCA:
+                    barcode = UPCa.Create(selection, srcArgs.Surface, toEncode, primary, secondary);
+                    break;
             }
         }
 
-        protected override unsafe void OnRender(Rectangle[] rois, int startIndex, int length)
+        protected override void OnRender(Rectangle[] renderRects, int startIndex, int length)
         {
             if (length == 0) return;
             for (int i = startIndex; i < startIndex + length; ++i)
             {
-                Render(DstArgs.Surface, SrcArgs.Surface, rois[i]);
+                Render(DstArgs.Surface, SrcArgs.Surface, renderRects[i]);
             }
         }
 
         // Note: The value of these constants match the index of the drop down box items in BarcodeConfigDialog
-        public const int CODE_39 = 0;
-        public const int CODE_39_MOD_43 = 1;
-        public const int FULL_ASCII_CODE_39 = 2;
-        public const int POSTNET = 3;
-        public const int UPCA = 4;
-
-        string toEncode;
-        int encoding;
-        bool colorsBW;
+        internal const int CODE_39 = 0;
+        internal const int CODE_39_MOD_43 = 1;
+        internal const int FULL_ASCII_CODE_39 = 2;
+        internal const int POSTNET = 3;
+        internal const int UPCA = 4;
 
         private BarcodeSurface barcode;
 
@@ -168,31 +108,22 @@ namespace Barcode
             }
         }
 
-        public static bool ValidateText(string text, int encoding)
+        internal static bool ValidateText(string text, int encoding)
         {
-            if (encoding == CODE_39)
+            switch (encoding)
             {
-                return Code39.ValidateCode39(text);
-            }
-            else if (encoding == CODE_39_MOD_43)
-            {
-                return Code39.ValidateCode39mod43(text);
-            }
-            else if (encoding == FULL_ASCII_CODE_39)
-            {
-                return Code39.ValidateFullAsciiCode39(text);
-            }
-            else if (encoding == POSTNET)
-            {
-                return Postnet.Validate(text);
-            }
-            else if (encoding == UPCA)
-            {
-                return UPCa.Validate(text);
-            }
-            else
-            {
-                return false;
+                case CODE_39:
+                    return Code39.ValidateCode39(text);
+                case CODE_39_MOD_43:
+                    return Code39.ValidateCode39mod43(text);
+                case FULL_ASCII_CODE_39:
+                    return Code39.ValidateFullAsciiCode39(text);
+                case POSTNET:
+                    return Postnet.Validate(text);
+                case UPCA:
+                    return UPCa.Validate(text);
+                default:
+                    return false;
             }
         }
     }
