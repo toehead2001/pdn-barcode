@@ -10,7 +10,7 @@ using PaintDotNet;
 
 namespace Barcode
 {
-    public static class Postnet
+    internal static class Postnet
     {
         private static readonly Dictionary<char, string> postnet;
 
@@ -31,7 +31,7 @@ namespace Barcode
             };
         }
 
-        public static BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
+        internal static BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             BarcodeSurface barcode = new BarcodeSurface(rect);
 
@@ -80,12 +80,12 @@ namespace Barcode
             return barcode;
         }
 
-        public static bool Validate(string text)
+        internal static bool Validate(string text)
         {
             return Regex.Match(text, "(^(\\d){5}$)|(^(\\d){6}$)|(^(\\d){9}$)|(^(\\d){11}$)").Success;
         }
 
-        public static string Encode(string text)
+        private static string Encode(string text)
         {
             string encoded = "";
             if (Validate(text))
@@ -101,7 +101,7 @@ namespace Barcode
             return encoded;
         }
 
-        public static string CheckDigit(string text)
+        private static string CheckDigit(string text)
         {
             int total = 0;
             for (int lcv = 0; lcv < text.Length; lcv++)

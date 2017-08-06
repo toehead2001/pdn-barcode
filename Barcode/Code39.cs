@@ -10,9 +10,10 @@ using PaintDotNet;
 
 namespace Barcode
 {
-    public static class Code39
+    internal static class Code39
     {
         private static readonly Dictionary<char, string> code39;
+        private const string charSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
 
         static Code39()
         {
@@ -149,7 +150,7 @@ namespace Barcode
             };
         }
 
-        public static BarcodeSurface CreateCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
+        internal static BarcodeSurface CreateCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             if (!ValidateCode39(text))
             {
@@ -160,7 +161,7 @@ namespace Barcode
             return Create(rect, source, text, primaryColor, secondaryColor);
         }
 
-        public static BarcodeSurface CreateCode39mod43(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
+        internal static BarcodeSurface CreateCode39mod43(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             if (!ValidateCode39mod43(text))
             {
@@ -172,7 +173,7 @@ namespace Barcode
             return Create(rect, source, text, primaryColor, secondaryColor);
         }
 
-        public static BarcodeSurface CreateFullAsciiCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
+        internal static BarcodeSurface CreateFullAsciiCode39(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             if (!ValidateFullAsciiCode39(text))
             {
@@ -222,8 +223,7 @@ namespace Barcode
             return barcode;
         }
 
-        private const string charSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%";
-        public static char Mod43(string text)
+        private static char Mod43(string text)
         {
             int total = 0;
             for (int lcv = 0; lcv < text.Length; lcv++)
@@ -233,7 +233,7 @@ namespace Barcode
             return charSet[total % 43];
         }
 
-        public static string Encode(string text)
+        private static string Encode(string text)
         {
             string encoded = "";
             if (text.Length > 0)
@@ -248,17 +248,17 @@ namespace Barcode
             return encoded;
         }
 
-        public static bool ValidateCode39(string text)
+        internal static bool ValidateCode39(string text)
         {
             return Regex.Match(text.ToUpperInvariant(), "^[A-Z0-9-\\.\\$/\\+%\\s]+$").Success;
         }
 
-        public static bool ValidateCode39mod43(string text)
+        internal static bool ValidateCode39mod43(string text)
         {
             return ValidateCode39(text);
         }
 
-        public static bool ValidateFullAsciiCode39(string text)
+        internal static bool ValidateFullAsciiCode39(string text)
         {
             bool passedInspection = true;
 

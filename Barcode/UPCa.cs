@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Barcode
 {
-    static class UPCa
+    internal static class UPCa
     {
         private static Bitmap newBitmap;
         private static Graphics g;
@@ -23,7 +23,7 @@ namespace Barcode
         private static readonly string[] UPCARight = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
         private const string UPCAEnd = "1010000000000000";
 
-        public static BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
+        internal static BarcodeSurface Create(Rectangle rect, Surface source, string text, ColorBgra primaryColor, ColorBgra secondaryColor)
         {
             BarcodeSurface barcode = new BarcodeSurface(rect);
 
@@ -107,12 +107,12 @@ namespace Barcode
             return barcode;
         }
 
-        public static bool Validate(string text)
+        internal static bool Validate(string text)
         {
             return Regex.Match(text, "^[0-9]{12}$").Success;
         }
 
-        public static int GetCheckSum(string barCode)
+        private static int GetCheckSum(string barCode)
         {
             string leftSideOfBarCode = barCode.Substring(0, 11);
             int total = 0;
