@@ -10,8 +10,8 @@ namespace Barcode
 {
     internal class BarcodeSurface
     {
-        private Rectangle rect;
-        private ColorBgra[,] surface;
+        private readonly Rectangle rect;
+        private readonly ColorBgra[,] surface;
 
         internal int Width => rect.Width;
         internal int Height => rect.Height;
