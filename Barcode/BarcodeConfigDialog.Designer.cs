@@ -44,6 +44,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ControlText;
             this.buttonCancel.Location = new System.Drawing.Point(254, 141);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(83, 23);
@@ -55,6 +56,7 @@
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.ForeColor = System.Drawing.SystemColors.ControlText;
             this.buttonOK.Location = new System.Drawing.Point(162, 141);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(83, 23);
@@ -69,7 +71,7 @@
             this.textBoxText.Name = "textBoxText";
             this.textBoxText.Size = new System.Drawing.Size(331, 23);
             this.textBoxText.TabIndex = 0;
-            this.textBoxText.TextChanged += new System.EventHandler(this.textBoxText_TextChanged);
+            this.textBoxText.TextChanged += new System.EventHandler(this.BarcodeInputValidation);
             // 
             // comboEncoding
             // 
@@ -85,7 +87,7 @@
             this.comboEncoding.Name = "comboEncoding";
             this.comboEncoding.Size = new System.Drawing.Size(127, 23);
             this.comboEncoding.TabIndex = 1;
-            this.comboEncoding.SelectedIndexChanged += new System.EventHandler(this.comboEncoding_SelectedIndexChanged);
+            this.comboEncoding.SelectedIndexChanged += new System.EventHandler(this.BarcodeInputValidation);
             // 
             // checkBoxBW
             // 
@@ -144,7 +146,6 @@
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.BackColor = System.Drawing.SystemColors.Window;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(345, 174);
             this.Controls.Add(this.panelDivider);
@@ -158,8 +159,11 @@
             this.Controls.Add(this.panelTextLine);
             this.Controls.Add(this.panelMethodLine);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.Black;
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "BarcodeConfigDialog";
             this.Text = "Barcode";
+            this.UseAppThemeColors = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -13,6 +13,8 @@ namespace Barcode
         public BarcodeConfigDialog()
         {
             InitializeComponent();
+            textBoxText.ForeColor = this.ForeColor;
+            textBoxText.BackColor = this.BackColor;
             ActiveControl = textBoxText;
         }
 
@@ -41,15 +43,19 @@ namespace Barcode
             FinishTokenUpdate();
         }
 
-        private void textBoxText_TextChanged(object sender, EventArgs e)
+        private void BarcodeInputValidation(object sender, EventArgs e)
         {
-            textBoxText.BackColor = (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex)) ? SystemColors.Window : Color.LightPink;
-            FinishTokenUpdate();
-        }
+            if (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex))
+            {
+                textBoxText.ForeColor = this.ForeColor;
+                textBoxText.BackColor = this.BackColor;
+            }
+            else
+            {
+                textBoxText.ForeColor = Color.Black;
+                textBoxText.BackColor = Color.LightPink;
+            }
 
-        private void comboEncoding_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            textBoxText.BackColor = (Barcode.ValidateText(textBoxText.Text, comboEncoding.SelectedIndex)) ? SystemColors.Window : Color.LightPink;
             FinishTokenUpdate();
         }
     }
