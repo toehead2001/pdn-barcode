@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Barcode Effect")]
 [assembly: AssemblyDescription("Barcode Generator")]
 [assembly: AssemblyConfiguration("Barcode|Code 39|POSTNET|UPC")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Sepcot & toe_head2001")]
 [assembly: AssemblyProduct("Barcode Effect")]
 [assembly: AssemblyCopyright("Copyright © Michael J. Sepcot & toe_head2001")]
 [assembly: AssemblyTrademark("")]
