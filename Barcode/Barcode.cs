@@ -16,7 +16,7 @@ namespace Barcode
         public string Copyright => ((AssemblyDescriptionAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0]).Description;
         public string DisplayName => ((AssemblyProductAttribute)base.GetType().Assembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0]).Product;
         public Version Version => base.GetType().Assembly.GetName().Version;
-        public Uri WebsiteUri => new Uri("http://www.getpaint.net/redirect/plugins.html");
+        public Uri WebsiteUri => new Uri("https://forums.getpaint.net/index.php?showtopic=31559");
     }
 
     [PluginSupportInfo(typeof(PluginSupportInfo), DisplayName = "Barcode")]
