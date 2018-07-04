@@ -44,7 +44,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.buttonCancel.Location = new System.Drawing.Point(254, 141);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(83, 23);
@@ -56,7 +56,7 @@
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.buttonOK.Location = new System.Drawing.Point(162, 141);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(83, 23);
