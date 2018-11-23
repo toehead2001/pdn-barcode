@@ -2,7 +2,6 @@
 // Author: Michael J. Sepcot
 // Addional Modifications: toe_head201
 
-
 namespace Barcode
 {
     public class BarcodeConfigToken : PaintDotNet.Effects.EffectConfigToken

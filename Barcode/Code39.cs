@@ -154,8 +154,7 @@ namespace Barcode
         {
             if (!ValidateCode39(text))
             {
-                BarcodeSurface barcode = new BarcodeSurface(rect);
-                return barcode;
+                return new BarcodeSurface(rect);
             }
             text = text.ToUpperInvariant();
             return Create(rect, source, text, primaryColor, secondaryColor);
@@ -165,11 +164,10 @@ namespace Barcode
         {
             if (!ValidateCode39mod43(text))
             {
-                BarcodeSurface barcode = new BarcodeSurface(rect);
-                return barcode;
+                return new BarcodeSurface(rect);
             }
             text = text.ToUpperInvariant();
-            text = text + Mod43(text);
+            text += Mod43(text);
             return Create(rect, source, text, primaryColor, secondaryColor);
         }
 
@@ -228,7 +226,7 @@ namespace Barcode
             int total = 0;
             for (int lcv = 0; lcv < text.Length; lcv++)
             {
-                total = total + charSet.IndexOf(text.Substring(lcv, 1));
+                total += charSet.IndexOf(text.Substring(lcv, 1));
             }
             return charSet[total % 43];
         }

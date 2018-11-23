@@ -41,17 +41,17 @@ namespace Barcode
             barCodeHeight = (int)(rect.Height / imageScale);
             imageWidth = 120;
             imageWidth = Convert.ToInt32(imageWidth * imageScale);
-            newBitmap = new Bitmap((imageWidth), rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            newBitmap = new Bitmap(imageWidth, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             g = Graphics.FromImage(newBitmap);
             g.ScaleTransform(imageScale, imageScale);
-            Rectangle newRec = new Rectangle(0, 0, (imageWidth), rect.Height);
+            Rectangle newRec = new Rectangle(0, 0, imageWidth, rect.Height);
             g.FillRectangle(new SolidBrush(secondaryColor), newRec);
             placeMarker = 0;
             text = text.Substring(0, 11) + GetCheckSum(text).ToString();
             int wholeSet = 0;
             for (wholeSet = 1; wholeSet <= Convert.ToInt32(text.Length); wholeSet++)
             {
-                int currentASCII = Convert.ToChar((text.Substring(wholeSet - 1, 1))) - 48;
+                int currentASCII = Convert.ToChar(text.Substring(wholeSet - 1, 1)) - 48;
                 if (wholeSet == 1)
                 {
                     DrawSet(UPCABegin, placeMarker, barCodeHeight, 0, primaryColor, secondaryColor);
@@ -121,7 +121,7 @@ namespace Barcode
             for (i = 0; i <= leftSideOfBarCode.Length - 1; i++)
             {
                 currentDigit = Convert.ToInt32(leftSideOfBarCode.Substring(i, 1));
-                if (((i - 1) % 2 == 0))
+                if ((i - 1) % 2 == 0)
                 {
                     total += currentDigit * 1;
                 }
@@ -149,15 +149,14 @@ namespace Barcode
                 if (currentLetterArray[i] == 0)
                 {
                     Pen barBrush = new Pen(secondaryColor);
-                    g.DrawLine(barBrush, i + (drawLocation), 0, i + (drawLocation), barHeight - 6);
+                    g.DrawLine(barBrush, i + drawLocation, 0, i + drawLocation, barHeight - 6);
                 }
                 else if (currentLetterArray[i] == 1)
                 {
                     Pen barBrush = new Pen(primaryColor);
-                    g.DrawLine(barBrush, i + (drawLocation), 0, i + (drawLocation), barHeight - 6);
+                    g.DrawLine(barBrush, i + drawLocation, 0, i + drawLocation, barHeight - 6);
                 }
             }
         }
-
     }
 }

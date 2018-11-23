@@ -90,7 +90,7 @@ namespace Barcode
             string encoded = "";
             if (Validate(text))
             {
-                text = text + CheckDigit(text);
+                text += CheckDigit(text);
                 encoded += "Bw";
                 for (int lcv = 0; lcv < text.Length; lcv++)
                 {

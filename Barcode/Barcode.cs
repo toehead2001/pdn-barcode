@@ -95,7 +95,7 @@ namespace Barcode
 
         private BarcodeSurface barcode;
 
-        void Render(Surface dst, Surface src, Rectangle rect)
+        private void Render(Surface dst, Surface src, Rectangle rect)
         {
             for (int y = rect.Top; y < rect.Bottom; ++y)
             {
