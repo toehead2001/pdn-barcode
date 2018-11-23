@@ -66,7 +66,7 @@ namespace Barcode
                 { (char)44, "bwwwbwwwbwbwwwbwbwbbbwbwbwwwbbb" }, // ,
                 { (char)45, "bwwwbwbwbbbwbbb" }, // -
                 { (char)46, "bbbwwwbwbwbbbwb" }, // .
-                { (char)47, "bwwwbwwwbwbwwwbwbbbwbwbbbwbwwwb" }, // /
+                { (char)47, "bwwwbwwwbwbwwwb" }, // /
                 { (char)48, "bwbwwwbbbwbbbwb" }, // 0
                 { (char)49, "bbbwbwwwbwbwbbb" }, // 1
                 { (char)50, "bwbbbwwwbwbwbbb" }, // 2
