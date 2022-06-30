@@ -26,7 +26,7 @@ namespace Barcode
         private static readonly Bitmap StaticIcon = new Bitmap(typeof(Barcode), "BarcodeIcon.png");
 
         public Barcode()
-            : base(StaticName, StaticIcon, SubmenuNames.Render, EffectFlags.Configurable)
+            : base(StaticName, StaticIcon, SubmenuNames.Render, new EffectOptions { Flags = EffectFlags.Configurable })
         {
         }
 
@@ -41,7 +41,7 @@ namespace Barcode
             int encoding = newToken.EncodingType;
             bool colorsBW = newToken.ColorsBW;
 
-            Rectangle selection = EnvironmentParameters.GetSelection(srcArgs.Surface.Bounds).GetBoundsInt();
+            Rectangle selection = EnvironmentParameters.SelectionBounds;
 
             ColorBgra primary;
             ColorBgra secondary;

@@ -105,7 +105,7 @@
             this.labelText.AutoSize = true;
             this.labelText.Location = new System.Drawing.Point(6, 8);
             this.labelText.Name = "labelText";
-            this.labelText.Size = new System.Drawing.Size(88, 15);
+            this.labelText.Size = new System.Drawing.Size(85, 15);
             this.labelText.TabIndex = 0;
             this.labelText.Text = "Text To Encode";
             // 
@@ -158,12 +158,9 @@
             this.Controls.Add(this.labelMethod);
             this.Controls.Add(this.panelTextLine);
             this.Controls.Add(this.panelMethodLine);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.Black;
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "BarcodeConfigDialog";
             this.Text = "Barcode";
-            this.UseAppThemeColors = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

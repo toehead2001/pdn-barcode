@@ -13,6 +13,7 @@ namespace Barcode
         public BarcodeConfigDialog()
         {
             InitializeComponent();
+            UseAppThemeColors = true;
             textBoxText.ForeColor = this.ForeColor;
             textBoxText.BackColor = this.BackColor;
             ActiveControl = textBoxText;
